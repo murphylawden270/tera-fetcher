@@ -17,8 +17,7 @@ if "bbcode" not in st.session_state:
 
 links = st.text_area("Enter Replay URL Here...", height=200)
 
-col1, col2 = st.columns(2, gap=None) 
-with col1:
+with st.container(border=False, horizontal=True):
     if st.button("Fetch"):
         if links.strip():
             pokemon_tera = {}
@@ -110,7 +109,7 @@ with col1:
             st.session_state.bbcode = "\n".join(table)
             if replay_warn:
                 st.code("\n".join(replay_warn))
-with col2:
+                
     if st.button("Clear"):
         st.session_state.bbcode = ""
         st.rerun()
