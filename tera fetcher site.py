@@ -15,6 +15,10 @@ st.title("Tera Fetcher Tool For Usage Stats:")
 if "bbcode" not in st.session_state:
     st.session_state.bbcode = ""
 
+if "reset" in st.session_state and st.session_state.reset:
+    st.session_state.links = ""
+    st.session_state.reset = False
+
 links = st.text_area("Enter Replay URL Here...", value=st.session_state.get("links", ""), key="links", height=200)
 
 with st.container(border=False, horizontal=True):
@@ -112,7 +116,7 @@ with st.container(border=False, horizontal=True):
                 
     if st.button("Clear"):
         st.session_state.bbcode = ""
-        st.session_state.links = ""
+        st.session_state.reset_links = True
         st.rerun()
 
 st.caption("BB Code:")
