@@ -15,7 +15,7 @@ st.title("Tera Fetcher Tool For Usage Stats:")
 if "bbcode" not in st.session_state:
     st.session_state.bbcode = ""
 
-links = st.text_area("Enter Replay URL Here...", height=200)
+links = st.text_area("Enter Replay URL Here...", value=st.session_state.get("links", ""), key="links", height=200)
 
 with st.container(border=False, horizontal=True):
     if st.button("Fetch"):
@@ -26,7 +26,7 @@ with st.container(border=False, horizontal=True):
             lock = Lock()
     
             header = '''[TABLE width="100%"]
-    [TR][TD width="33.3333%"]Pokemon[/TD][TD width="10%"]Count[/TD][TD width="33.3333%"]Type[/TD][/TR]'''
+[TR][TD width="33.3333%"]Pokemon[/TD][TD width="10%"]Count[/TD][TD width="33.3333%"]Type[/TD][/TR]'''
             table.append(header)
             final_no_tera = 0
             proccessed_replays = []
@@ -112,6 +112,7 @@ with st.container(border=False, horizontal=True):
                 
     if st.button("Clear"):
         st.session_state.bbcode = ""
+        st.session_state.links = ""
         st.rerun()
 
 st.caption("BB Code:")
