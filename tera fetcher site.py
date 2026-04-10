@@ -32,7 +32,7 @@ if st.button("Fetch"):
         
         tech = requests.Session()
         
-        def proccess_replays(replay, try = 5):
+        def proccess_replays(replay, retry = 5):
             no_tera = 0
 
             if not replay.startswith("https://replay"):
@@ -47,7 +47,7 @@ if st.button("Fetch"):
                 proccessed_replays.append(replay)
 
             c = None
-            for attempt in range(try):
+            for attempt in range(retry):
                 try:
                     with requests.Session() as tech:
                         b = tech.get(replay, timeout=10)
@@ -63,7 +63,8 @@ if st.button("Fetch"):
                         replay_warn.append(f'Error fetching {replay}: {e}')
                     return None
             if "<h1>Not Found</h1>" in c:
-                replay_warn.append(f'Invalid Replay : {replay}! No Tera could be extracted!')
+                with lock:
+                    replay_warn.append(f'Invalid Replay : {replay}! No Tera could be extracted!')
                 return None
             else:
                 x = re.findall(r'\|-terastallize\|(.*): (.*)', c)
