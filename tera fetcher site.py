@@ -15,9 +15,6 @@ st.title("Tera Fetcher Tool For Usage Stats:")
 if "bbcode" not in st.session_state:
     st.session_state.bbcode = ""
 
-if "error" not in st.session_state:
-    st.session_state.error = ""
-
 links = st.text_area("Enter Replay URL Here...", height=200)
 
 if st.button("Fetch"):
@@ -97,7 +94,7 @@ if st.button("Fetch"):
 
         st.session_state.bbcode = "\n".join(table)
         if replay_warn:
-            st.session_state.error = "\n".join(replay_warn)
+            st.code("\n".join(replay_warn))
 
 st.caption("BB Code:")
 st.code(st.session_state.bbcode, language=None, height=300)
