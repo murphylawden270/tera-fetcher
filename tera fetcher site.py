@@ -32,11 +32,12 @@ if st.button("Fetch"):
         
         tech = requests.Session()
         
-        def proccess_replays(replay):
+        def proccess_replays(replay, try = 5):
             no_tera = 0
 
             if not replay.startswith("https://replay"):
-                replay_warn.append(f'{replay} is not a replay! No Tera could be extracted!')
+                with lock:
+                    replay_warn.append(f'{replay} is not a replay! No Tera could be extracted!')
                 return None
             
             with lock:
@@ -45,8 +46,22 @@ if st.button("Fetch"):
                     return None
                 proccessed_replays.append(replay)
 
-            b = tech.get(replay)
-            c = b.text
+            c = None
+            for attempt in range(try):
+                try:
+                    with requests.Session() as tech:
+                        b = tech.get(replay, timeout=10)
+                        c = b.text
+                    break
+                except requests.exceptions.Timeout:
+                    if attempt == retries - 1:
+                        with lock:
+                            replay_warn.append(f'Timeout after {retries} attempts: {replay}!')
+                        return None
+                except requests.exceptions.RequestException as e:
+                    with lock:
+                        replay_warn.append(f'Error fetching {replay}: {e}')
+                    return None
             if "<h1>Not Found</h1>" in c:
                 replay_warn.append(f'Invalid Replay : {replay}! No Tera could be extracted!')
                 return None
@@ -66,10 +81,13 @@ if st.button("Fetch"):
                     tera = y[1].strip()
                     pokemon_tera[correct_name[0]].append(tera)
             return no_tera
+            
         attempts = links.splitlines()
-        limit = min(50, len(attempts))
-        with ThreadPoolExecutor(max_workers=limit) as executor:
-            link = list(executor.map(proccess_replays, attempts))
+
+        with st.spinner(f"Processing {len(attempts)} replays..."):
+            limit = min(100, len(attempts))
+            with ThreadPoolExecutor(max_workers=limit) as executor:
+                link = list(executor.map(proccess_replays, attempts))
 
         for i in link:
             if i is not None:
