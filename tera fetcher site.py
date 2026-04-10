@@ -98,4 +98,3 @@ if st.button("Fetch"):
 
 st.caption("BB Code:")
 st.code(st.session_state.bbcode, language=None, height=300)
-st.text_area("Error:", st.session_state.error, height=200)
