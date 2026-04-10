@@ -111,9 +111,9 @@ with col1:
             if replay_warn:
                 st.code("\n".join(replay_warn))
 with col2:
-if st.button("Clear"):
-    st.session_state.bbcode = ""
-    st.rerun()
+    if st.button("Clear"):
+        st.session_state.bbcode = ""
+        st.rerun()
 
 st.caption("BB Code:")
 st.code(st.session_state.bbcode, language=None, height=300)
