@@ -89,7 +89,7 @@ with st.container(border=False, horizontal=True):
                 return no_tera
                 
             attempts = links.splitlines()
-            n = attempts
+            n = len(attempts)
     
             with st.spinner(f"Processing {n} replays..."):
                 n = n - 1
