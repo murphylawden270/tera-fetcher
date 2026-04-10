@@ -17,7 +17,7 @@ if "bbcode" not in st.session_state:
 
 links = st.text_area("Enter Replay URL Here...", height=200)
 
-col1, col2 = st.columns(2)
+col1, col2 = st.columns(2, gap=None) 
 with col1:
     if st.button("Fetch"):
         if links.strip():
