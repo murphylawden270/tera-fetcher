@@ -121,8 +121,8 @@ with st.container(border=False, horizontal=True):
         st.session_state.reset = True
         st.rerun()
     
-    if replay_warn:
-        st.code("\n".join(replay_warn))
+if replay_warn:
+    st.code("\n".join(replay_warn))
 
 st.caption("BB Code:")
 st.code(st.session_state.bbcode, language=None, height=300)
