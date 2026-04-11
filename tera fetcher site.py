@@ -48,7 +48,7 @@ with st.container(border=False, horizontal=True):
                         replay_warn.append(f'{replay} is not a replay! No Tera could be extracted!')
                     return None
 
-                if "gen9" in replay :
+                if "gen9" not in replay :
                     with lock:
                         replay_warn.append(f'{replay} is not a Generation 9 replay! No Tera could be extracted!')
                     return None
