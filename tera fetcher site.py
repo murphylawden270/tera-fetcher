@@ -21,12 +21,12 @@ if "reset" in st.session_state and st.session_state.reset:
 
 links = st.text_area("Enter Replay URL Here...", value=st.session_state.get("links", ""), key="links", height=200)
 
+replay_warn = []
 with st.container(border=False, horizontal=True):
     if st.button("Fetch"):
         if links.strip():
             pokemon_tera = {}
             table = []
-            replay_warn = []
             lock = Lock()
     
             header = '''[TABLE width="100%"]
